@@ -1,12 +1,8 @@
 #pragma once
-#define GLEW_STATIC
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include "stb_image/stb_image.h"
-#include <iostream>
+#include "CorePCH.h"
 
 
-class Texture
+class API Texture
 {
 private:
 	unsigned int m_Id;
@@ -17,9 +13,6 @@ public:
 	~Texture();
 	void Bind(unsigned int slot = 0) const;
 	void Unind() const;
-
-
-
 
 };
 

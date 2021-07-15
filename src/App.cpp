@@ -1,17 +1,19 @@
-#define GLEW_STATIC
-#include <gl/glew.h>
-#include <GLFW/glfw3.h>
-#include <string>
-#include <iostream>
+#include "CorePCH.h"
 #include "Shader.h"
 #include "Texture.h"
 #include "Camera.h"
+#include "VertexArray.h"
+#include "VertexBuffer.h"
+#include "VertexBufferLayout.h"
 
 static Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 static float deltaTime = 0.0f;
 static float lastFrame = 0.0f;
 static float lastX = 400.0f, lastY = 300.0f;
 static bool firstInput = true;
+
+
+static glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
 
 void fbsc(GLFWwindow* window, int width, int height)
 {
@@ -82,88 +84,92 @@ int main(int argc, const char* argv)
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
 
-	float vertices[]{
-		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-		 0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
-		-0.5f,  0.5f, -0.5f, 0.0f, 1.0f,
-	    -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-	    -0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
-	     0.5f, -0.5f,  0.5f, 1.0f, 0.0f,
-	     0.5f,  0.5f,  0.5f, 1.0f, 1.0f,
-	     0.5f,  0.5f,  0.5f, 1.0f, 1.0f,
-	     -0.5f, 0.5f,  0.5f, 0.0f, 1.0f,
-	     -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-	     -0.5f, 0.5f,  0.5f, 1.0f, 0.0f,
-	     -0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-	     -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-	     -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-	     -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-	     -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-	     0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-	     0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-	     0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-	     0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-	     0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-	     0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-	     -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-	     0.5f, -0.5f, -0.5f, 1.0f, 1.0f,
-	     0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
-	     0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
-	     -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-	     -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-	     -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
-	     0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-	     0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-	     0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-	     -0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
-	     -0.5f, 0.5f, -0.5f, 0.0f, 1.0f
+	float vertices[] = {
+		// positions          // normals          // texture coords
+		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 0.0f,
+		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f,
+		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f,
 
+		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 1.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 1.0f, 1.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 1.0f, 1.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f,
+
+		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
+		-0.5f, 0.5f,  -0.5f, -1.0f,  0.0f,  0.0f, 1.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f, 0.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
+
+		 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 1.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
+		 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 0.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
+
+		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, 1.0f, 1.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f, 0.0f, 0.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f,
+
+		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f,
+		 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f, 1.0f, 1.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f, 0.0f, 0.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f
 	};
+
 #if(0)
 	unsigned int indices[]{
 		0, 1, 3,
 		1, 2, 3
 	};
 #endif
-	unsigned int vao;
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
 
-	unsigned int vbo;
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	VertexArray vao;
+	vao.Bind();
+
+	VertexBuffer vbo(sizeof(vertices), vertices);
+	vbo.Bind();
+
+	VertexBufferLayout layout;
+
+	layout.Push<float>(3);
+	layout.Push<float>(3);
+	layout.Push<float>(2);
+
+	vao.AddBuffer(vbo, layout);
 #if(0)
 	unsigned int ebo;
 	glGenBuffers(1, &ebo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 #endif
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*) 0);
-	glEnableVertexAttribArray(0);
 
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
+	VertexArray lightVAO;
+	lightVAO.Bind();
+	VertexBufferLayout lightLayout;
+	lightLayout.Push<float>(3);
+	lightLayout.Push<float>(3);
+	lightLayout.Push<float>(2);
+	lightVAO.AddBuffer(vbo, lightLayout);
 
-	Shader shader("res/shaders/shaders.shader");
+
+	Shader mainShader("res/shaders/shaders.shader");
+	Shader lighingShader("res/shaders/lighting.shader");
 	glClearColor(0.16f, 0.56f, 0.47f, 1.0f);
-	Texture texture0("res/textures/poggers.png");
-	Texture texture1("res/textures/chel.png");
+	Texture texture("res/textures/brick.jpg");
 
-	glm::vec3 cubePositions[] = {
-		glm::vec3(0.0f, 0.0f, 0.0f),
-		glm::vec3(2.0f, 5.0f, -15.0f),
-		glm::vec3(-1.5f, -2.2f, -2.5f),
-		glm::vec3(-3.8f, -2.0f, -12.3f),
-		glm::vec3(2.4f, -0.4f, -3.5f),
-		glm::vec3(-1.7f, 3.0f, -7.5f),
-		glm::vec3(1.3f, -2.0f, -2.5f),
-		glm::vec3(1.5f, 2.0f, -2.5f),
-		glm::vec3(1.5f, 0.2f, -1.5f),
-		glm::vec3(-1.3f, 1.0f, -1.5f)
-	};
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -172,36 +178,43 @@ int main(int argc, const char* argv)
 		lastFrame = currentFrame;
 		ProcessInput(window);
 
-		shader.use();
-		texture0.Bind();
-		texture1.Bind(1);
-		shader.SetInt("texture1", 0);
-		shader.SetInt("texture2", 1);
+		mainShader.use();
+		texture.Bind();
 
+		mainShader.SetInt("texture", 0);
 
 		glm::mat4 view;
 		view = camera.GetViewMatrix();
 		glm::mat4 projection;
 		projection = glm::perspective(glm::radians(camera.Zoom), 1600.0f / 900.0f, 0.1f, 100.f);
-		shader.SetMat4("view", view);
-		shader.SetMat4("projection", projection);
-		shader.SetFloat("alpha", abs(sin(glfwGetTime())));
-
+		mainShader.SetMat4("view", view);
+		mainShader.SetMat4("projection", projection);
+		mainShader.SetVec3("objectColor", 1.0f, 0.5f, 0.31f);
+		mainShader.SetVec3("lightColor", 1.0f, 1.0f, 1.0f);
+		mainShader.SetVec3("lightPos", lightPos);
+		mainShader.SetVec3("viewPos", camera.Position);
 #if(0)
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 #endif
-		glBindVertexArray(vao);
+		vao.Bind();
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::rotate(model, (float)glfwGetTime() * glm::radians(40.0f), glm::vec3(1.0f, 1.0f, 0.5f));
+		mainShader.SetMat4("model", model);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		for (int i = 0; i < 10; i++)
-		{
-			glm::mat4 model = glm::mat4(1.0f);
-			model = glm::translate(model, cubePositions[i]);
-			float angle = 20.0f * (i + 1);
-			model = glm::rotate(model, (float) glfwGetTime() * glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-			shader.SetMat4("model", model);
-			glDrawArrays(GL_TRIANGLES, 0, 36);
-		}
+		lighingShader.use();
+
+		glm::mat4 modelN(1.0f);
+		modelN = glm::translate(modelN, lightPos);
+		modelN = glm::scale(modelN, glm::vec3(0.2f));
+		lighingShader.SetMat4("view", view);
+		lighingShader.SetMat4("projection", projection);
+		lighingShader.SetMat4("model", modelN);
+
+		lightVAO.Bind();
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
 		glfwSwapBuffers(window);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
