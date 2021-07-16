@@ -1,13 +1,5 @@
 #pragma once
-#define GLEW_STATIC
-#include <GL/glew.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/type_ptr.hpp>
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include <unordered_map>
+#include "CorePCH.h"
 
 
 class API Shader

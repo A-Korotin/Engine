@@ -1,11 +1,10 @@
-#define GLEW_STATIC
-#include <gl/glew.h>
-#include <GLFW/glfw3.h>
-#include <string>
-#include <iostream>
+#include "CorePCH.h"
 #include "Shader.h"
 #include "Texture.h"
 #include "Camera.h"
+#include "VertexArray.h"
+#include "VertexBuffer.h"
+#include "VertexBufferLayout.h"
 
 static Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 static float deltaTime = 0.0f;
@@ -94,88 +93,92 @@ int main(int argc, const char* argv)
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
 
-	float vertices[]{
-		-0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-		 0.5f, -0.5f, -0.5f, 1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f, 1.0f, 1.0f,
-		-0.5f,  0.5f, -0.5f, 0.0f, 1.0f,
-	    -0.5f, -0.5f, -0.5f, 0.0f, 0.0f,
-	    -0.5f, -0.5f,  0.5f, 0.0f, 0.0f,
-	     0.5f, -0.5f,  0.5f, 1.0f, 0.0f,
-	     0.5f,  0.5f,  0.5f, 1.0f, 1.0f,
-	     0.5f,  0.5f,  0.5f, 1.0f, 1.0f,
-	     -0.5f, 0.5f,  0.5f, 0.0f, 1.0f,
-	     -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-	     -0.5f, 0.5f,  0.5f, 1.0f, 0.0f,
-	     -0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-	     -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-	     -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-	     -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-	     -0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-	     0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-	     0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-	     0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-	     0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-	     0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-	     0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-	     -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-	     0.5f, -0.5f, -0.5f, 1.0f, 1.0f,
-	     0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
-	     0.5f, -0.5f, 0.5f, 1.0f, 0.0f,
-	     -0.5f, -0.5f, 0.5f, 0.0f, 0.0f,
-	     -0.5f, -0.5f, -0.5f, 0.0f, 1.0f,
-	     -0.5f, 0.5f, -0.5f, 0.0f, 1.0f,
-	     0.5f, 0.5f, -0.5f, 1.0f, 1.0f,
-	     0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-	     0.5f, 0.5f, 0.5f, 1.0f, 0.0f,
-	     -0.5f, 0.5f, 0.5f, 0.0f, 0.0f,
-	     -0.5f, 0.5f, -0.5f, 0.0f, 1.0f
+	float vertices[] = {
+		// positions          // normals          // texture coords
+		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 0.0f,
+		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f,
+		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f,
 
+		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 1.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 1.0f, 1.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 1.0f, 1.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f,
+
+		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
+		-0.5f, 0.5f,  -0.5f, -1.0f,  0.0f,  0.0f, 1.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f, 0.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
+
+		 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 1.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
+		 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 0.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
+
+		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, 1.0f, 1.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f, 0.0f, 0.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f,
+
+		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f,
+		 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f, 1.0f, 1.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f, 0.0f, 0.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f
 	};
+
 #if(0)
 	unsigned int indices[]{
 		0, 1, 3,
 		1, 2, 3
 	};
 #endif
-	unsigned int vao;
-	glGenVertexArrays(1, &vao);
-	glBindVertexArray(vao);
 
-	unsigned int vbo;
-	glGenBuffers(1, &vbo);
-	glBindBuffer(GL_ARRAY_BUFFER, vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	VertexArray vao;
+	vao.Bind();
+
+	VertexBuffer vbo(sizeof(vertices), vertices);
+	vbo.Bind();
+
+	VertexBufferLayout layout;
+
+	layout.Push<float>(3);
+	layout.Push<float>(3);
+	layout.Push<float>(2);
+
+	vao.AddBuffer(vbo, layout);
 #if(0)
 	unsigned int ebo;
 	glGenBuffers(1, &ebo);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 #endif
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*) 0);
-	glEnableVertexAttribArray(0);
 
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
+	VertexArray lightVAO;
+	lightVAO.Bind();
+	VertexBufferLayout lightLayout;
+	lightLayout.Push<float>(3);
+	lightLayout.Push<float>(3);
+	lightLayout.Push<float>(2);
+	lightVAO.AddBuffer(vbo, lightLayout);
+
 
 	Shader mainShader("res/shaders/shaders.shader");
 	Shader lighingShader("res/shaders/lighting.shader");
 	Texture texture("res/textures/container2.png");
 	Texture border("res/textures/container2_specular.png");
 
-	glm::vec3 cubePositions[] = {
-		glm::vec3(0.0f, 0.0f, 0.0f),
-		glm::vec3(2.0f, 5.0f, -15.0f),
-		glm::vec3(-1.5f, -2.2f, -2.5f),
-		glm::vec3(-3.8f, -2.0f, -12.3f),
-		glm::vec3(2.4f, -0.4f, -3.5f),
-		glm::vec3(-1.7f, 3.0f, -7.5f),
-		glm::vec3(1.3f, -2.0f, -2.5f),
-		glm::vec3(1.5f, 2.0f, -2.5f),
-		glm::vec3(1.5f, 0.2f, -1.5f),
-		glm::vec3(-1.3f, 1.0f, -1.5f)
-	};
 
 	glm::vec3 pointLightPositions[] = {
 		glm::vec3(0.7f, 0.2f, 2.0f),
