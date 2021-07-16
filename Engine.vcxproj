@@ -160,6 +160,7 @@
     <ClCompile Include="src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="CORE\Core\CorePCH.pch" />
     <None Include="res\shaders\shaders.shader" />
     <None Include="src\shaders\shaders.shader" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
@@ -300,6 +301,7 @@
     <None Include="src\vendor\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CORE\Core\CorePCH.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\vendor\glm\common.hpp" />

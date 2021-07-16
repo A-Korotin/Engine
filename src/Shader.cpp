@@ -50,7 +50,7 @@ Shader::Shader(const char* filepath)
 
 	unsigned int vert, frag;
 	int success;
-	char infoLog[512];
+	char infoLog[2048];
 	vert = glCreateShader(GL_VERTEX_SHADER);
 	glShaderSource(vert, 1, &vSource, nullptr);
 	glCompileShader(vert);
@@ -113,7 +113,17 @@ void Shader::SetFloat(const char* name, float value) const
 	glUniform1f(GetLocation(name), value);
 }
 
-void Shader::SetMat4(const char* name, glm::mat4 value) const
+void Shader::SetMat4(const char* name, const glm::mat4& value) const
 {
 	glUniformMatrix4fv(GetLocation(name), 1, GL_FALSE, glm::value_ptr(value));
+}
+
+void Shader::SetVec3(const char* name, float v0, float v1, float v2) const
+{
+	glUniform3f(GetLocation(name), v0, v1, v2);
+}
+
+void Shader::SetVec3(const char* name, const glm::vec3& value) const
+{
+	glUniform3f(GetLocation(name), value.x, value.y, value.z);
 }

@@ -454,6 +454,7 @@
       <Filter>Файлы заголовков</Filter>
     </None>
     <None Include="res\shaders\shaders.shader" />
+    <None Include="CORE\Core\CorePCH.pch" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Shader.h">
@@ -1333,6 +1334,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\Camera.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="CORE\Core\CorePCH.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
