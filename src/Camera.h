@@ -1,9 +1,5 @@
 #pragma once
-
-#include <gl/glew.h>
-#include <GLFW/glfw3.h>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
+#include "CorePCH.h"
 
 enum class Camera_movement
 {
