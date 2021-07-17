@@ -128,3 +128,8 @@ void Shader::SetVec3(const char* name, const glm::vec3& value) const
 {
 	glUniform3f(GetLocation(name), value.x, value.y, value.z);
 }
+
+void Shader::SetMat3(const char* name, const glm::mat3& value) const
+{
+	glUniformMatrix3fv(GetLocation(name), 1, GL_FALSE, glm::value_ptr(value));
+}

@@ -180,6 +180,7 @@ int main(int argc, const char* argv)
 
 		glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)WIDTH / (float)HEIGHT, 0.1f, 100.f);
 		glm::mat4 view = camera.GetViewMatrix();
+
 		shader.SetMat4("projection", projection);
 		shader.SetMat4("view", view);
 		shader.SetVec3("viewPos", camera.Position);
@@ -189,6 +190,9 @@ int main(int argc, const char* argv)
 		model = glm::translate(model, glm::vec3(0.0f));
 		model = glm::scale(model, glm::vec3(1.0f));
 		shader.SetMat4("model", model);
+
+		glm::mat3 normalMatrix = glm::transpose(glm::inverse(model));
+		shader.SetMat3("normalMatrix", normalMatrix);
 
 		BackPack.Draw(shader);
 
