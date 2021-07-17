@@ -2,7 +2,7 @@
 #include "CorePCH.h"
 
 
-class API Shader
+class Shader
 {
 private:
 	unsigned int m_Id;

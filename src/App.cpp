@@ -5,7 +5,7 @@
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
-#include <assimp/Importer.hpp>
+
 
 static Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 static float deltaTime = 0.0f;
@@ -177,8 +177,8 @@ int main(int argc, const char* argv)
 
 	Shader mainShader("res/shaders/shaders.shader");
 	Shader lighingShader("res/shaders/lighting.shader");
-	Texture texture("res/textures/container2.png");
-	Texture border("res/textures/container2_specular.png");
+	Texturee texture("res/textures/container2.png");
+	Texturee border("res/textures/container2_specular.png");
 
 	glm::vec3 cubePositions[] = {
 		glm::vec3(0.0f, 0.0f, 0.0f),

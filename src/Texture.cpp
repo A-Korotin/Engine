@@ -1,6 +1,6 @@
 #include "Texture.h"
 
-Texture::Texture(const char* filepath)
+Texturee::Texturee(const char* filepath)
 	:m_Id(0), m_Data(nullptr), m_Height(0), m_Width(0), m_Channels(0)
 {
 	stbi_set_flip_vertically_on_load(1);
@@ -28,18 +28,18 @@ Texture::Texture(const char* filepath)
 
 }
 
-Texture::~Texture()
+Texturee::~Texturee()
 {
 	glDeleteTextures(1, &m_Id);
 }
 
-void Texture::Bind(unsigned int slot) const
+void Texturee::Bind(unsigned int slot) const
 {
 	glActiveTexture(GL_TEXTURE0 + slot);
 	glBindTexture(GL_TEXTURE_2D, m_Id);
 }
 
-void Texture::Unind() const
+void Texturee::Unind() const
 {
 	glBindTexture(GL_TEXTURE_2D, 0);
 }

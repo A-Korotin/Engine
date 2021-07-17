@@ -90,7 +90,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;BUILD_DLL; BUILD_DLL_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)GL\GLEW\include;$(SolutionDir)GL\GLFW\include;$(SolutionDir)src\vendor;$(SolutionDir)CORE\Core;D:\Projects\Engine\src\vendor\assimp-5.0.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GL\GLEW\include;$(SolutionDir)GL\GLFW\include;$(SolutionDir)src\vendor;$(SolutionDir)CORE\Core;$(SolutionDir)src\vendor\assimp-5.0.1\include</AdditionalIncludeDirectories>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>CorePCH.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(SolutionDir)CORE\Core\CorePCH.pch</PrecompiledHeaderOutputFile>
@@ -98,8 +98,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)GL\GLEW\lib\Release\Win32; $(SolutionDir)GL\GLFW\lib-vc2019; $(SolutionDir)GL\GLEW\lib\Release\Win32; $(SolutionDir)GL\GLFW\lib-vc2019;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)GL\GLEW\lib\Release\Win32;$(SolutionDir)GL\GLFW\lib-vc2019;$(SolutionDir)src\build\code\Release;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32s.lib;assimp-vc142-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -110,7 +110,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;BUILD_DLL; BUILD_DLLNDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)GL\GLEW\include;$(SolutionDir)GL\GLFW\include;$(SolutionDir)src\vendor;$(SolutionDir)CORE\Core;D:\Projects\Engine\src\vendor\assimp-5.0.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GL\GLEW\include;$(SolutionDir)GL\GLFW\include;$(SolutionDir)src\vendor;$(SolutionDir)CORE\Core;$(SolutionDir)src\vendor\assimp-5.0.1\include</AdditionalIncludeDirectories>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>CorePCH.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(SolutionDir)CORE\Core\CorePCH.pch</PrecompiledHeaderOutputFile>
@@ -120,8 +120,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)GL\GLEW\lib\Release\Win32; $(SolutionDir)GL\GLFW\lib-vc2019; $(SolutionDir)GL\GLEW\lib\Release\Win32; $(SolutionDir)GL\GLFW\lib-vc2019;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32s.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)GL\GLEW\lib\Release\Win32;$(SolutionDir)GL\GLFW\lib-vc2019;$(SolutionDir)src\build\code\Release;</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glfw3.lib;glew32s.lib;assimp-vc142-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -157,6 +157,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Model.cpp" />
+    <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\App.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Texture.cpp" />
@@ -313,6 +315,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CORE\Core\CorePCH.h" />
+    <ClInclude Include="src\Model.h" />
+    <ClInclude Include="src\Mesh.h" />
     <ClInclude Include="src\Camera.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\Texture.h" />

@@ -22,7 +22,6 @@
 
 #define ASSERT(x) if(!(x)) __debugbreak();
 
-
 #ifdef BUILD_DLL
 	#define API __declspec(dllexport)
 #else 

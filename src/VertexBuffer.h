@@ -1,7 +1,7 @@
 #pragma once
 #include "CorePCH.h"
 
-class API VertexBuffer
+class VertexBuffer
 {
 private:
 	unsigned int m_ID;

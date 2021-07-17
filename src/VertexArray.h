@@ -2,9 +2,9 @@
 #include "CorePCH.h"
 #include "VertexBuffer.h"
 
-class API VertexBufferLayout;
+class VertexBufferLayout;
 
-class API VertexArray
+class VertexArray
 {
 private:
 	unsigned int m_ID;
