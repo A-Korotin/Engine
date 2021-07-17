@@ -50,12 +50,12 @@ void main()
 
 	vec3 reflectDir = reflect(-lightDir, normal);
 
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0f), 8.0f);
+	float spec = pow(max(dot(viewDir, reflectDir), 0.0f), 32.0f);
 
 	float distance = length(lightPos - FragPos);
-	float attenuation = pow(1.0f + 0.09f * distance + 0.032f * pow(distance, 2.0f), -1.0f);
+	float attenuation = pow(1.0f + 0.045f * distance + 0.0075f * pow(distance, 2.0f), -1.0f);
 
-	vec3 ambient = vec3(0.1f) * vec3(texture(material.texture_diffuse1, TexCoord));
+	vec3 ambient = vec3(0.2f) * vec3(texture(material.texture_diffuse1, TexCoord));
 	
 	vec3 specular = vec3(1.0f) * spec * vec3(texture(material.texture_specular1, TexCoord));
 

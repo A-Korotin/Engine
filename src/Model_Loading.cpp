@@ -17,7 +17,7 @@ static bool firstInput = true;
 static float deltaTime = 0.0f;
 static float lastFrame = 0.0f;
 
-static bool flash = true;
+static glm::vec3 lightPos(1.0f, 5.0f, 3.0f);
 
 
 void fbsc(GLFWwindow* window, int width, int height)
@@ -37,8 +37,18 @@ void ProcessInput(GLFWwindow* window)
 		camera.ProcessKeyboard(Camera_movement::LEFT, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		camera.ProcessKeyboard(Camera_movement::RIGHT, deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
-		flash = !flash;
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+		lightPos.y += 0.05f;
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+		lightPos.y -= 0.05f;
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+		lightPos.x -= 0.05f;
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+		lightPos.x += 0.05f;
+	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+		lightPos.z -= 0.05f;
+	if (glfwGetKey(window, GLFW_KEY_8) == GLFW_PRESS)
+		lightPos.z += 0.05f;
 }
 
 void mouse_callback(GLFWwindow* window, double xPos, double yPos)
@@ -155,7 +165,6 @@ int main(int argc, const char* argv)
 
 	Model BackPack("res/models/backpack/backpack.obj");
 
-	glm::vec3 lightPos(1.0f, 5.0f, 3.0f);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -180,13 +189,8 @@ int main(int argc, const char* argv)
 		model = glm::translate(model, glm::vec3(0.0f));
 		model = glm::scale(model, glm::vec3(1.0f));
 		shader.SetMat4("model", model);
-		shader.SetBool("flash", flash);
-
-
 
 		BackPack.Draw(shader);
-
-
 
 		lightVAO.Bind();
 		lightShader.use();

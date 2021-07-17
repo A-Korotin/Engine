@@ -1,0 +1,22 @@
+toneMap 0
+brightness 1 1 1 0.584246
+contrast 1 1 1 1.04396
+bias 1 1 1 0.341176
+saturation 1 1 1 1.59017
+sharpen 0.5
+sharpenLimit 0.408163
+bloomColor 1 1 1 0.0817188
+bloomSize 0.0535714
+vignette 0 0 0 0.32
+vignetteCurve 0.749149
+grain 0
+grainSharpness 1
+barrel 0
+chromaticAberration -1 0 1 0.1
+lensFlareStrength 0
+lensFlareContrast 0
+lensFlareScale 1.5
+colorCurve @Spline h 0 0 0 h 0.273438 0.226563 3.08065 h 0.625 0.6875 -2.71808 h 1 1 0 @EndSpline
+colorCurveRed @Spline h 0 0 0 h 1 1 0 @EndSpline
+colorCurveGreen @Spline h 0 0 0 h 1 1 0 @EndSpline
+colorCurveBlue @Spline h 0 0 0 h 1 1 0 @EndSpline
