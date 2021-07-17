@@ -48,10 +48,10 @@
     <ClCompile Include="src\VertexBufferLayout.h">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\App.cpp">
+    <ClCompile Include="src\Mesh.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mesh.cpp">
+    <ClCompile Include="src\Model_Loading.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="src\Model.cpp">
@@ -472,6 +472,13 @@
     </None>
     <None Include="res\shaders\shaders.shader" />
     <None Include="CORE\Core\CorePCH.pch" />
+    <None Include="res\shaders\lighting.shader" />
+    <None Include="res\shaders\Backpack.shader" />
+    <None Include="res\models\backpack\backpack.mtl" />
+    <None Include="bin\assimp-vc142-mt.dll" />
+    <None Include="bin\Engine.exe" />
+    <None Include="bin\Engine.ilk" />
+    <None Include="bin\Engine.pdb" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Shader.h">
@@ -1371,5 +1378,28 @@
     <ClInclude Include="src\Model.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\models\backpack\specular.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="res\models\backpack\roughness.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="res\models\backpack\normal.png">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="res\models\backpack\diffuse.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+    <Image Include="res\models\backpack\ao.jpg">
+      <Filter>Файлы ресурсов</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="res\models\backpack\source_attribution.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="res\models\backpack\backpack.obj" />
   </ItemGroup>
 </Project>

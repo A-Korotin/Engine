@@ -10,7 +10,7 @@ void Model::Draw(Shader& shader)
 void Model::loadModel(std::string path)
 {
 	Assimp::Importer Import;
-	const aiScene* scene = Import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs);
+	const aiScene* scene = Import.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
 	{
@@ -49,16 +49,14 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 		vector.y = mesh->mVertices[i].y;
 		vector.z = mesh->mVertices[i].z;
 		vertex.Position = vector;
-		vector.x = mesh->mNormals[i].x;
-		vector.y = mesh->mNormals[i].y;
-		vector.z = mesh->mNormals[i].z;
-		vertex.Normal = vector;
+
 
 		if (mesh->HasNormals())
 		{
 			vector.x = mesh->mNormals[i].x;
 			vector.y = mesh->mNormals[i].y;
 			vector.z = mesh->mNormals[i].z;
+			vertex.Normal = vector;
 		}
 		if (mesh->mTextureCoords[0])
 		{
@@ -67,6 +65,8 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 			vec.y = mesh->mTextureCoords[0][i].y;
 			vertex.TexCoords = vec;
 
+			if (mesh->HasTangentsAndBitangents())
+			{ 
 			vector.x = mesh->mTangents[i].x;
 			vector.y = mesh->mTangents[i].y;
 			vector.z = mesh->mTangents[i].z;
@@ -76,9 +76,12 @@ Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)
 			vector.y = mesh->mBitangents[i].y;
 			vector.z = mesh->mBitangents[i].z;
 			vertex.Bitangent = vector;
+			}
 		}
 		else
 			vertex.TexCoords = glm::vec2(0.0f, 0.0f);
+
+
 		vertices.push_back(vertex);
 	}
 
@@ -128,10 +131,11 @@ std::vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType 
 		if (!skip)
 		{
 			Texture texture;
-			texture.id = TextureFromFile(str.C_Str(), directory);
+			texture.id = TextureFromFile(str.C_Str(), this->directory);
 			texture.type = typeName;
 			texture.path = str.C_Str();
 			textures.push_back(texture);
+			textures_loaded.push_back(texture);
 		}
 	}
 	return textures;
@@ -150,18 +154,13 @@ unsigned int TextureFromFile(const char* path, const std::string& directory, boo
 	if (data)
 	{
 		GLenum format;
-		switch (nrComponents)
-		{
-		case 1:
+		if (nrComponents == 1)
 			format = GL_RED;
-			break;
-		case 3:
+		else if (nrComponents == 3)
 			format = GL_RGB;
-			break;
-		case 4:
+		else if (nrComponents == 4)
 			format = GL_RGBA;
-			break;
-		}
+
 		glBindTexture(GL_TEXTURE_2D, textureID);
 		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);

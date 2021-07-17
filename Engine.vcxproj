@@ -157,9 +157,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
-    <ClCompile Include="src\App.cpp" />
+    <ClCompile Include="src\Model.cpp" />
+    <ClCompile Include="src\Model_Loading.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="src\vendor\glm\detail\glm.cpp" />
@@ -173,7 +173,14 @@
     <ClCompile Include="src\VertexBufferLayout.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="bin\assimp-vc142-mt.dll" />
+    <None Include="bin\Engine.exe" />
+    <None Include="bin\Engine.ilk" />
+    <None Include="bin\Engine.pdb" />
     <None Include="CORE\Core\CorePCH.pch" />
+    <None Include="res\models\backpack\backpack.mtl" />
+    <None Include="res\shaders\Backpack.shader" />
+    <None Include="res\shaders\lighting.shader" />
     <None Include="res\shaders\shaders.shader" />
     <None Include="src\shaders\shaders.shader" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
@@ -612,6 +619,19 @@
     <ClInclude Include="src\vendor\stb_image\stb_image.h" />
     <ClInclude Include="src\VertexArray.h" />
     <ClInclude Include="src\VertexBuffer.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\models\backpack\ao.jpg" />
+    <Image Include="res\models\backpack\diffuse.jpg" />
+    <Image Include="res\models\backpack\normal.png" />
+    <Image Include="res\models\backpack\roughness.jpg" />
+    <Image Include="res\models\backpack\specular.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="res\models\backpack\source_attribution.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="res\models\backpack\backpack.obj" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
