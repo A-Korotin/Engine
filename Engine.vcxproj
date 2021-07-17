@@ -90,7 +90,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;BUILD_DLL; BUILD_DLL_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)GL\GLEW\include; $(SolutionDir)GL\GLFW\include;$(SolutionDir)src\vendor; $(SolutionDir)src\vendor; $(SolutionDir)GL\GLEW\include; $(SolutionDir)GL\GLFW\include; $(SolutionDir)CORE\Core;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GL\GLEW\include;$(SolutionDir)GL\GLFW\include;$(SolutionDir)src\vendor;$(SolutionDir)CORE\Core;D:\Projects\Engine\src\vendor\assimp-5.0.1\include</AdditionalIncludeDirectories>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>CorePCH.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(SolutionDir)CORE\Core\CorePCH.pch</PrecompiledHeaderOutputFile>
@@ -110,7 +110,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;BUILD_DLL; BUILD_DLLNDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)GL\GLEW\include; $(SolutionDir)GL\GLFW\include;$(SolutionDir)src\vendor; $(SolutionDir)src\vendor; $(SolutionDir)GL\GLEW\include; $(SolutionDir)GL\GLFW\include; $(SolutionDir)CORE\Core;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GL\GLEW\include;$(SolutionDir)GL\GLFW\include;$(SolutionDir)src\vendor;$(SolutionDir)CORE\Core;D:\Projects\Engine\src\vendor\assimp-5.0.1\include</AdditionalIncludeDirectories>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>CorePCH.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(SolutionDir)CORE\Core\CorePCH.pch</PrecompiledHeaderOutputFile>

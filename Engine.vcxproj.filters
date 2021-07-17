@@ -55,7 +55,6 @@
   <ItemGroup>
     <None Include="src\shaders\shaders.shader" />
     <None Include="res\shaders\shaders.shader" />
-    <None Include="res\shaders\lighting.shader" />
     <None Include="CORE\Core\CorePCH.pch" />
     <None Include="src\vendor\glm\detail\func_common.inl">
       <Filter>Файлы заголовков</Filter>
