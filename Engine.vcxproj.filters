@@ -479,6 +479,7 @@
     <None Include="bin\Engine.exe" />
     <None Include="bin\Engine.ilk" />
     <None Include="bin\Engine.pdb" />
+    <None Include="res\shaders\backpack_new.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Shader.h">
@@ -1398,8 +1399,5 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="res\models\backpack\source_attribution.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="res\models\backpack\backpack.obj" />
   </ItemGroup>
 </Project>

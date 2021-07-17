@@ -2,6 +2,9 @@
 
 #include "Camera.h"
 #include "Model.h"
+#include "VertexArray.h"
+#include "VertexBuffer.h"
+#include "VertexBufferLayout.h"
 
 #define WIDTH 1600
 #define HEIGHT 900
@@ -13,6 +16,8 @@ static bool firstInput = true;
 
 static float deltaTime = 0.0f;
 static float lastFrame = 0.0f;
+
+static bool flash = true;
 
 
 void fbsc(GLFWwindow* window, int width, int height)
@@ -32,6 +37,8 @@ void ProcessInput(GLFWwindow* window)
 		camera.ProcessKeyboard(Camera_movement::LEFT, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		camera.ProcessKeyboard(Camera_movement::RIGHT, deltaTime);
+	if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
+		flash = !flash;
 }
 
 void mouse_callback(GLFWwindow* window, double xPos, double yPos)
@@ -77,7 +84,7 @@ int main(int argc, const char* argv)
 
 	if (glewInit() != GLEW_OK)
 		return -1;
-
+	
 	glEnable(GL_DEPTH_TEST);
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetCursorPosCallback(window, mouse_callback);
@@ -85,9 +92,70 @@ int main(int argc, const char* argv)
 
 	stbi_set_flip_vertically_on_load(true);
 
-	Shader shader("res/shaders/Backpack.shader");
+	float vertices[] = {
+		// positions          // normals          // texture coords
+		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 0.0f,
+		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f,
+		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f,
+
+		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 1.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 1.0f, 1.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 1.0f, 1.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f,
+
+		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
+		-0.5f, 0.5f,  -0.5f, -1.0f,  0.0f,  0.0f, 1.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
+		-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f, 0.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
+
+		 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
+		 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 1.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
+		 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 0.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
+
+		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f,
+		 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, 1.0f, 1.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f,
+		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f,
+		-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f, 0.0f, 0.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f,
+
+		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f,
+		 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f, 1.0f, 1.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f, 0.0f, 0.0f,
+		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f
+	};
+
+
+	VertexBuffer vbo(sizeof(vertices), vertices);
+	vbo.Bind();
+
+	VertexArray lightVAO;
+	lightVAO.Bind();
+	VertexBufferLayout lightLayout;
+	lightLayout.Push<float>(3);
+	lightLayout.Push<float>(3);
+	lightLayout.Push<float>(2);
+	lightVAO.AddBuffer(vbo, lightLayout);
+
+	Shader lightShader("res/shaders/lighting.shader");
+
+	Shader shader("res/shaders/backpack_new.shader");
 
 	Model BackPack("res/models/backpack/backpack.obj");
+
+	glm::vec3 lightPos(1.0f, 5.0f, 3.0f);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -105,13 +173,31 @@ int main(int argc, const char* argv)
 		glm::mat4 view = camera.GetViewMatrix();
 		shader.SetMat4("projection", projection);
 		shader.SetMat4("view", view);
+		shader.SetVec3("viewPos", camera.Position);
+		shader.SetVec3("lightPos", lightPos);
 
 		glm::mat4 model(1.0f);
 		model = glm::translate(model, glm::vec3(0.0f));
 		model = glm::scale(model, glm::vec3(1.0f));
 		shader.SetMat4("model", model);
-		
+		shader.SetBool("flash", flash);
+
+
+
 		BackPack.Draw(shader);
+
+
+
+		lightVAO.Bind();
+		lightShader.use();
+
+		glm::mat4 modelL(1.0f);
+		modelL = glm::translate(modelL, lightPos);
+		modelL = glm::scale(modelL, glm::vec3(0.1f));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		lightShader.SetMat4("view", view);
+		lightShader.SetMat4("projection", projection);
+		lightShader.SetMat4("model", modelL);
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();

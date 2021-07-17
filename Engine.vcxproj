@@ -180,6 +180,7 @@
     <None Include="CORE\Core\CorePCH.pch" />
     <None Include="res\models\backpack\backpack.mtl" />
     <None Include="res\shaders\Backpack.shader" />
+    <None Include="res\shaders\backpack_new.shader" />
     <None Include="res\shaders\lighting.shader" />
     <None Include="res\shaders\shaders.shader" />
     <None Include="src\shaders\shaders.shader" />
@@ -629,9 +630,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="res\models\backpack\source_attribution.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Object Include="res\models\backpack\backpack.obj" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
