@@ -1,6 +1,7 @@
 #include "Model.h"
 
 
+
 void Model::Draw(Shader& shader)
 {
 	for (unsigned int i = 0; i < meshes.size(); i++)
@@ -23,6 +24,9 @@ void Model::loadModel(std::string path)
 	processNode(scene->mRootNode, scene);
 }
 
+
+
+
 void Model::processNode(aiNode* node, const aiScene* scene)
 {
 	for (unsigned int i = 0; i < node->mNumMeshes; i++)
@@ -33,6 +37,7 @@ void Model::processNode(aiNode* node, const aiScene* scene)
 
 	for (unsigned int i = 0; i < node->mNumChildren; i++)
 		processNode(node->mChildren[i], scene);
+
 }
 
 Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene)

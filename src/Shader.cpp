@@ -8,6 +8,26 @@ enum class ShaderType
 	FRAGMENT = 1
 };
 
+void Shader::readFile(const char* filepath, std::string& content) const
+{
+	std::string line;
+	std::ifstream input;
+	input.exceptions(std::ifstream::failbit | std::ifstream::failbit);
+	try
+	{
+		input.open(filepath);
+		while (!input.eof())
+		{
+			std::getline(input, line);
+			content += line + '\n';
+		}
+	}
+	catch (std::ifstream::failure e)
+	{
+		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ ON " << filepath << '\n' << e.what() << std::endl;
+	}
+}
+
 Shader::Shader(const char* filepath)
 {
 	std::string vertex;
@@ -86,6 +106,57 @@ Shader::Shader(const char* filepath)
 	glDeleteShader(vert);
 	glDeleteShader(frag);
 }
+
+Shader::Shader(const char* vertexFilepath, const char* fragmnetFilepath)
+{
+	std::string vertexSource;
+	std::string fragmentSource;
+
+	readFile(vertexFilepath, vertexSource);
+	readFile(fragmnetFilepath, fragmentSource);
+
+	const char* vertexS = vertexSource.c_str();
+	const char* fragmentS = fragmentSource.c_str();
+
+	unsigned int vert, frag;
+	int success;
+	char infoLog[2048];
+	vert = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vert, 1, &vertexS, nullptr);
+	glCompileShader(vert);
+
+	glGetShaderiv(vert, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(vert, 2048, nullptr, infoLog);
+		std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+	}
+
+	frag = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(frag, 1, &fragmentS, nullptr);
+	glCompileShader(frag);
+	glGetShaderiv(frag, GL_COMPILE_STATUS, &success);
+	if (!success)
+	{
+		glGetShaderInfoLog(frag, 2048, nullptr, infoLog);
+		std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
+	}
+
+	m_Id = glCreateProgram();
+	glAttachShader(m_Id, vert);
+	glAttachShader(m_Id, frag);
+	glLinkProgram(m_Id);
+	glGetProgramiv(m_Id, GL_LINK_STATUS, &success);
+	if (!success)
+	{
+		glGetProgramInfoLog(m_Id, 2048, nullptr, infoLog);
+		std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
+	}
+	glDeleteShader(vert);
+	glDeleteShader(frag);
+}
+
+
 
 void Shader::use()
 {

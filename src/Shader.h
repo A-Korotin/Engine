@@ -7,8 +7,12 @@ class Shader
 private:
 	unsigned int m_Id;
 	mutable std::unordered_map<std::string, int> m_Locations;
+
+	void readFile(const char* filePath, std::string& content) const;
 public:
 	Shader(const char* filepath);
+
+	Shader(const char* vertexFilepath, const char* fragmentFilepath);
 
 	void use();
 	

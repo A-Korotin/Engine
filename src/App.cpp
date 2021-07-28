@@ -5,6 +5,8 @@
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
+#include "BasicShapes.h"
+#include <map>
 
 
 static Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
@@ -90,66 +92,17 @@ int main(int argc, const char* argv)
 		return -1;
 
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetCursorPosCallback(window, mouse_callback);
 	glfwSetScrollCallback(window, scroll_callback);
 
-	float vertices[] = {
-		// positions          // normals          // texture coords
-		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f,
-
-		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 1.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 1.0f, 1.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f, 0.0f, 0.0f,
-
-		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
-		-0.5f, 0.5f,  -0.5f, -1.0f,  0.0f,  0.0f, 1.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f, 0.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
-
-		 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 1.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 0.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 0.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 1.0f, 0.0f,
-
-		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, 1.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f, 1.0f, 0.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f, 0.0f, 0.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f, 0.0f, 1.0f,
-
-		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f, 1.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f, 1.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f, 0.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f, 0.0f, 1.0f
-	};
-
-#if(0)
-	unsigned int indices[]{
-		0, 1, 3,
-		1, 2, 3
-	};
-#endif
 
 	VertexArray vao;
 	vao.Bind();
 
-	VertexBuffer vbo(sizeof(vertices), vertices);
+	VertexBuffer vbo(sizeof(CubeVertices), CubeVertices);
 	vbo.Bind();
 
 	VertexBufferLayout layout;
@@ -166,55 +119,48 @@ int main(int argc, const char* argv)
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 #endif
 
-	VertexArray lightVAO;
-	lightVAO.Bind();
-	VertexBufferLayout lightLayout;
-	lightLayout.Push<float>(3);
-	lightLayout.Push<float>(3);
-	lightLayout.Push<float>(2);
-	lightVAO.AddBuffer(vbo, lightLayout);
 
+	VertexArray quadVAO;
+	quadVAO.Bind();
 
-	Shader mainShader("res/shaders/shaders.shader");
-	Shader lighingShader("res/shaders/lighting.shader");
-	Texturee texture("res/textures/container2.png");
-	Texturee border("res/textures/container2_specular.png");
+	VertexBuffer quadVBO(sizeof(quadVertecies), quadVertecies);
+	quadVBO.Bind();
 
-	glm::vec3 cubePositions[] = {
-		glm::vec3(0.0f, 0.0f, 0.0f),
-		glm::vec3(2.0f, 5.0f, -15.0f),
-		glm::vec3(-1.5f, -2.2f, -2.5f),
-		glm::vec3(-3.8f, -2.0f, -12.3f),
-		glm::vec3(2.4f, -0.4f, -3.5f),
-		glm::vec3(-1.7f, 3.0f, -7.5f),
-		glm::vec3(1.3f, -2.0f, -2.5f),
-		glm::vec3(1.5f, 2.0f, -2.5f),
-		glm::vec3(1.5f, 0.2f, -1.5f),
-		glm::vec3(-1.3f, 1.0f, -1.5f)
-	};
+	VertexBufferLayout quadLayout;
+	quadLayout.Push<float>(3);
+	quadLayout.Push<float>(2);
+	quadVAO.AddBuffer(quadVBO, quadLayout);
 
-
-
-	glm::vec3 pointLightPositions[] = {
-		glm::vec3(0.7f, 0.2f, 2.0f),
-		glm::vec3(2.3f,-3.3f,-4.0f),
-		glm::vec3(-4.0f,2.0f,-12.0f),
-		glm::vec3(0.0f, 0.0f,-3.0f)
-	};
+	Shader mainShader("res/shaders/main_blending_vertex.glsl", "res/shaders/main_blending_fragment.glsl");
+	Shader quadShader("res/shaders/quad_vertex.glsl", "res/shaders/quad_fragment.glsl");
 	
+	tex::Texture redWindow("res/textures/blending_transparent_window.png");
+	tex::Texture mainTexture("res/textures/gray_texture.jpg");
+	tex::Texture grass("res/textures/grass.png");
+
+
+	glm::vec3 CubePositions[] = {
+		glm::vec3(1.0f, 0.0f, 1.0f),
+		glm::vec3(2.0f, 0.0f, -1.0f)
+	};
+
+
+	std::vector<glm::vec3> vegetation{ glm::vec3(-1.5f, 0.0f, -0.48f), glm::vec3(1.5f, 0.0f, 0.51f), glm::vec3(0.0f, 0.0f, 0.7f),
+									   glm::vec3(-0.3f, 0.0f, -2.3f), glm::vec3(0.5f, 0.0f, -0.6f)
+	};
 
 	while (!glfwWindowShouldClose(window))
 	{
 		glClearColor(0.f, 0.f, abs(sin(glfwGetTime() / 4))/5, 1.0f);
-		glm::vec3 lightPos(4*sin(glfwGetTime()), 4*cos(glfwGetTime()), 10*cos(glfwGetTime()));
 		float currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 		ProcessInput(window);
 
 		mainShader.use();
-		texture.Bind();
-		border.Bind(1);
+		mainTexture.Bind(0);
+		redWindow.Bind(1);
+		grass.Bind(2);
 
 		glm::vec3 lightColor(1.0f);
 
@@ -227,83 +173,51 @@ int main(int argc, const char* argv)
 		projection = glm::perspective(glm::radians(camera.Zoom), 1600.0f / 900.0f, 0.1f, 100.f);
 		mainShader.SetMat4("view", view);
 		mainShader.SetMat4("projection", projection);
-		mainShader.SetVec3("viewPos", camera.Position);
-		mainShader.SetInt("material.diffuse", 0);
-		mainShader.SetInt("material.specular", 1);
-		mainShader.SetFloat("material.shininess", 32.0f);
-
-		mainShader.SetVec3("dirLight.direction", -0.2f, -1.0f, -0.3f);
-		mainShader.SetVec3("dirLight.ambient", ambientColor);
-		mainShader.SetVec3("dirLight.diffuse",diffuseColor);
-		mainShader.SetVec3("dirLight.specular", 0.5f, 0.5f, 0.5f);
-
-		for (int i = 0; i < 4; i++)
-		{
-			mainShader.SetVec3(("pointLights[" + std::to_string(i) + "].position").c_str(), pointLightPositions[i]);
-			mainShader.SetFloat(("pointLights[" + std::to_string(i) + "].constant").c_str(), 1.0f);
-			mainShader.SetFloat(("pointLights[" + std::to_string(i) + "].linearr").c_str(), 0.09f);
-			mainShader.SetFloat(("pointLights[" + std::to_string(i) + "].quadratic").c_str(), 0.032f);
-			mainShader.SetVec3(("pointLights[" + std::to_string(i) + "].ambient").c_str(), ambientColor);
-			mainShader.SetVec3(("pointLights[" + std::to_string(i) + "].diffuse").c_str(), 0.8f, 0.8f, 0.8f);
-			mainShader.SetVec3(("pointLights[" + std::to_string(i) + "].specular").c_str(), 1.0f, 1.0f, 1.0f);
-		}
-
-		mainShader.SetVec3("spotLight.position", camera.Position);
-		mainShader.SetVec3("spotLight.direction", camera.Front);
-		mainShader.SetFloat("spotLight.innerCutOff", glm::cos(glm::radians(12.5f)));
-		mainShader.SetFloat("spotLight.outerCutOff", glm::cos(glm::radians(15.f)));
-		mainShader.SetVec3("spotLight.ambient", 0.0f, 0.0f, 0.0f);
-		mainShader.SetVec3("spotLight.diffuse", 1.0f, 1.0f, 1.0f);
-		mainShader.SetVec3("spotLight.specular", 1.0f, 1.0f, 1.0f);
-		mainShader.SetFloat("spotLight.constant", 1.0f);
-		mainShader.SetFloat("spotLight.linearr", 0.09f);
-		mainShader.SetFloat("spotLight.quadratic", 0.032f);
-
-		mainShader.SetBool("flash", flash);
-
-		/*
-		//mainShader.SetVec3("light.position", lightPos);
-		mainShader.SetVec3("light.ambient", ambientColor);
-		mainShader.SetVec3("light.diffuse", diffuseColor);
-		mainShader.SetVec3("light.specular", 1.0f, 1.0f, 1.0f);
-		mainShader.SetFloat("light.constant", 1.0f);
-		mainShader.SetFloat("light.linearr", 0.014f);
-		mainShader.SetFloat("light.quadratic", 0.0007f);
-		mainShader.SetVec3("light.position", camera.Position);
-		mainShader.SetVec3("light.direction", camera.Front);
-		mainShader.SetFloat("light.cutOff", glm::cos(glm::radians(12.5f)));
-		mainShader.SetFloat("light.outerCutOff", glm::cos(glm::radians(17.5f)));
-		*/
-
-#if(0)
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ebo);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
-#endif
+		mainShader.SetInt("texture0", 0);
+		mainShader.SetInt("texture1", 1);
 		vao.Bind();
-		for (unsigned int i = 0; i < 10; i++)
+
+		for (unsigned int i = 0; i < 2; i++)
 		{
 		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::translate(model, cubePositions[i]);
-		float angle = 20.0f * i;
-		model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
-
+		model = glm::translate(model, CubePositions[i]);
 		mainShader.SetMat4("model", model);
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
 
 	
-		lighingShader.use();
-		lightVAO.Bind();
+		quadShader.use();
+		quadVAO.Bind();
 
-		for (int i = 0; i < 4; i++)
+		glm::mat4 model(1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, -1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(10.0f));
+		quadShader.SetMat4("view", view);
+		quadShader.SetMat4("projection", projection);
+		quadShader.SetMat4("model", model);
+		quadShader.SetInt("texture0", 0);
+		glDrawArrays(GL_TRIANGLES, 0, 6);
+
+
+		quadShader.SetInt("texture0", 1);
+		quadShader.SetMat4("view", view);
+		quadShader.SetMat4("projection", projection);
+
+		std::map<float, glm::vec3> sorted;
+
+		for (unsigned int i = 0; i < vegetation.size(); i++)
 		{
-			glm::mat4 modelN(1.0f);
-			modelN = glm::translate(modelN, pointLightPositions[i]);
-			modelN = glm::scale(modelN, glm::vec3(0.2f));
-			glDrawArrays(GL_TRIANGLES, 0, 36);
-			lighingShader.SetMat4("view", view);
-			lighingShader.SetMat4("projection", projection);
-			lighingShader.SetMat4("model", modelN);
+			float distance = glm::length(camera.Position - vegetation[i]);
+			sorted[distance] = vegetation[i];
+		}
+
+		for (std::map<float, glm::vec3>::reverse_iterator it = sorted.rbegin(); it != sorted.rend(); it++)
+		{
+			model = glm::mat4(1.0f);
+			model = glm::translate(model, it->second);
+			model = glm::rotate(model, glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+			quadShader.SetMat4("model", model);
+			glDrawArrays(GL_TRIANGLES, 0, 6);
 		}
 
 		glfwSwapBuffers(window);

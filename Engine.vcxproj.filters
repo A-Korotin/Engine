@@ -51,10 +51,10 @@
     <ClCompile Include="src\Mesh.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\Model_Loading.cpp">
+    <ClCompile Include="src\Model.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\Model.cpp">
+    <ClCompile Include="src\App.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -480,6 +480,12 @@
     <None Include="bin\Engine.ilk" />
     <None Include="bin\Engine.pdb" />
     <None Include="res\shaders\backpack_new.shader" />
+    <None Include="res\shaders\test_vertex.glsl" />
+    <None Include="res\shaders\test_fragment.glsl" />
+    <None Include="res\shaders\main_blending_fragment.glsl" />
+    <None Include="res\shaders\main_blending_vertex.glsl" />
+    <None Include="res\shaders\quad_vertex.glsl" />
+    <None Include="res\shaders\quad_fragment.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Shader.h">
@@ -1377,6 +1383,9 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\Model.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BasicShapes.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

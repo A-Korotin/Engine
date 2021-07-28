@@ -161,8 +161,8 @@ int main(int argc, const char* argv)
 
 	Shader lightShader("res/shaders/lighting.shader");
 
-	Shader shader("res/shaders/backpack_new.shader");
-
+	Shader shader("res/shaders/test_vertex.glsl", "res/shaders/test_fragment.glsl");
+	
 	Model BackPack("res/models/backpack/backpack.obj");
 
 
