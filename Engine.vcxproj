@@ -157,9 +157,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\App.cpp" />
+    <ClCompile Include="src\framebuffers.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\Model.cpp" />
+    <ClCompile Include="src\ModelLoadingScene.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Texture.cpp" />
     <ClCompile Include="src\vendor\glm\detail\glm.cpp" />
@@ -167,6 +168,7 @@
     <ClCompile Include="src\vendor\imgui\imgui_demo.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui_draw.cpp" />
     <ClCompile Include="src\vendor\imgui\imgui_impl_glfw_gl3.cpp" />
+    <ClCompile Include="src\vendor\ogre\Assimp.cpp" />
     <ClCompile Include="src\vendor\stb_image\stb_image.cpp" />
     <ClCompile Include="src\VertexArray.cpp" />
     <ClCompile Include="src\VertexBuffer.cpp" />
@@ -181,6 +183,8 @@
     <None Include="res\models\backpack\backpack.mtl" />
     <None Include="res\shaders\Backpack.shader" />
     <None Include="res\shaders\backpack_new.shader" />
+    <None Include="res\shaders\cubemap\cubemap_fragment.glsl" />
+    <None Include="res\shaders\cubemap\cubemap_vertex.glsl" />
     <None Include="res\shaders\quad_fragment.glsl" />
     <None Include="res\shaders\quad_vertex.glsl" />
     <None Include="res\shaders\lighting.shader" />
@@ -329,6 +333,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CORE\Core\CorePCH.h" />
+    <ClInclude Include="src\ModelLoadScene.h" />
+    <ClInclude Include="src\Scene.h" />
     <ClInclude Include="src\BasicShapes.h" />
     <ClInclude Include="src\Model.h" />
     <ClInclude Include="src\Mesh.h" />
@@ -624,6 +630,7 @@
     <ClInclude Include="src\vendor\imgui\stb_rect_pack.h" />
     <ClInclude Include="src\vendor\imgui\stb_textedit.h" />
     <ClInclude Include="src\vendor\imgui\stb_truetype.h" />
+    <ClInclude Include="src\vendor\ogre\Assimp.h" />
     <ClInclude Include="src\vendor\stb_image\stb_image.h" />
     <ClInclude Include="src\VertexArray.h" />
     <ClInclude Include="src\VertexBuffer.h" />

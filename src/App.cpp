@@ -15,9 +15,6 @@ static float lastFrame = 0.0f;
 static float lastX = 400.0f, lastY = 300.0f;
 static bool firstInput = true;
 
-static bool flash = 0;
-static double lastFlash = 0.0f;
-
 
 void fbsc(GLFWwindow* window, int width, int height)
 {
@@ -36,14 +33,6 @@ void ProcessInput(GLFWwindow* window)
 		camera.ProcessKeyboard(Camera_movement::LEFT, deltaTime);
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 		camera.ProcessKeyboard(Camera_movement::RIGHT, deltaTime);
-	if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
-	{
-		if (glfwGetTime() - lastFlash > 0.3)
-		{
-			flash = !flash;
-			lastFlash = glfwGetTime();
-		}
-	}
 
 }
 

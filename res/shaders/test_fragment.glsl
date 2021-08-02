@@ -1,9 +1,9 @@
-#version 330 core
+#version 410 core
 
 struct Material
 {
-	sampler2D texture_diffuse1;
-	sampler2D texture_specular1;
+	sampler2D texture_diffuse0;
+	sampler2D texture_specular0;
 };
 
 out vec4 FragColor;
@@ -32,11 +32,11 @@ void main()
 	float distance = length(lightPos - FragPos);
 	float attenuation = pow(1.0f + 0.045f * distance + 0.0075f * pow(distance, 2.0f), -1.0f);
 
-	vec3 ambient = vec3(0.2f) * vec3(texture(material.texture_diffuse1, TexCoord));
+	vec3 ambient = vec3(0.2f) * vec3(texture(material.texture_diffuse0, TexCoord));
 	
-	vec3 specular = vec3(1.0f) * spec * vec3(texture(material.texture_specular1, TexCoord));
+	vec3 specular = vec3(1.0f) * spec * vec3(texture(material.texture_specular0, TexCoord));
 
-	vec3 diffuse = vec3(0.8f) * diff * vec3(texture(material.texture_diffuse1, TexCoord));
+	vec3 diffuse = vec3(0.8f) * diff * vec3(texture(material.texture_diffuse0, TexCoord));
 
 	ambient *= attenuation;
 	diffuse *= attenuation;

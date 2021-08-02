@@ -54,7 +54,13 @@
     <ClCompile Include="src\Model.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\App.cpp">
+    <ClCompile Include="src\ModelLoadingScene.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\framebuffers.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vendor\ogre\Assimp.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
@@ -486,6 +492,8 @@
     <None Include="res\shaders\main_blending_vertex.glsl" />
     <None Include="res\shaders\quad_vertex.glsl" />
     <None Include="res\shaders\quad_fragment.glsl" />
+    <None Include="res\shaders\cubemap\cubemap_vertex.glsl" />
+    <None Include="res\shaders\cubemap\cubemap_fragment.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Shader.h">
@@ -1386,6 +1394,15 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\BasicShapes.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ModelLoadScene.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vendor\ogre\Assimp.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
