@@ -147,25 +147,25 @@ int main(int argc, char argv[])
 
 
 
-	Shader bpShader("res/shaders/test_vertex.glsl", "res/shaders/test_fragment.glsl");
-	Shader cubemapShader("res/shaders/cubemap/cubemap_vertex.glsl", "res/shaders/cubemap/cubemap_fragment.glsl");
-	Shader quadShader("res/shaders/quad_vertex.glsl", "res/shaders/quad_fragment.glsl");
+	Shader bpShader("Application/res/shaders/test_vertex.glsl", "Application/res/shaders/test_fragment.glsl");
+	Shader cubemapShader("Application/res/shaders/cubemap/cubemap_vertex.glsl", "Application/res/shaders/cubemap/cubemap_fragment.glsl");
+	Shader quadShader("Application/res/shaders/quad_vertex.glsl", "Application/res/shaders/quad_fragment.glsl");
 
-	tex::Texture mainTexture("res/textures/gray_texture.jpg");
+	tex::Texture mainTexture("Application/res/textures/gray_texture.jpg");
 
 	std::vector<std::string> faces
 	{
-		"res/textures/skybox/right.jpg",
-		"res/textures/skybox/left.jpg",
-		"res/textures/skybox/top.jpg",
-		"res/textures/skybox/bottom.jpg",
-		"res/textures/skybox/front.jpg",
-		"res/textures/skybox/back.jpg",
+		"Application/res/textures/skybox/right.jpg",
+		"Application/res/textures/skybox/left.jpg",
+		"Application/res/textures/skybox/top.jpg",
+		"Application/res/textures/skybox/bottom.jpg",
+		"Application/res/textures/skybox/front.jpg",
+		"Application/res/textures/skybox/back.jpg",
 	};
 
 	unsigned int cubemapTexture = loadCubeMap(faces);
 
-	Model bp("res/models/backpack/backpack.obj");
+	Model bp("Application/res/models/backpack/backpack.obj");
 	glm::vec3 lightPos(-5.0f, 5.0f, -2.0f);
 
 

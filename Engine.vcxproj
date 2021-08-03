@@ -90,7 +90,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;BUILD_DLL; BUILD_DLL_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)GL\GLEW\include;$(SolutionDir)GL\GLFW\include;$(SolutionDir)src\vendor;$(SolutionDir)CORE\Core;$(SolutionDir)src\vendor\assimp-5.0.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GL\GLEW\include;$(SolutionDir)GL\GLFW\include;$(SolutionDir)src\vendor;$(SolutionDir)CORE\Core;$(SolutionDir)src\vendor\assimp-5.0.1\include;$(SolutionDir)src</AdditionalIncludeDirectories>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>CorePCH.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(SolutionDir)CORE\Core\CorePCH.pch</PrecompiledHeaderOutputFile>
@@ -110,7 +110,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;BUILD_DLL; BUILD_DLLNDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)GL\GLEW\include;$(SolutionDir)GL\GLFW\include;$(SolutionDir)src\vendor;$(SolutionDir)CORE\Core;$(SolutionDir)src\vendor\assimp-5.0.1\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)GL\GLEW\include;$(SolutionDir)GL\GLFW\include;$(SolutionDir)src\vendor;$(SolutionDir)CORE\Core;$(SolutionDir)src\vendor\assimp-5.0.1\include;$(SolutionDir)src</AdditionalIncludeDirectories>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>CorePCH.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(SolutionDir)CORE\Core\CorePCH.pch</PrecompiledHeaderOutputFile>
@@ -157,7 +157,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\framebuffers.cpp" />
+    <ClCompile Include="Application\framebuffers.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\Model.cpp" />
     <ClCompile Include="src\ModelLoadingScene.cpp" />
@@ -180,19 +180,19 @@
     <None Include="bin\Engine.ilk" />
     <None Include="bin\Engine.pdb" />
     <None Include="CORE\Core\CorePCH.pch" />
-    <None Include="res\models\backpack\backpack.mtl" />
-    <None Include="res\shaders\Backpack.shader" />
-    <None Include="res\shaders\backpack_new.shader" />
-    <None Include="res\shaders\cubemap\cubemap_fragment.glsl" />
-    <None Include="res\shaders\cubemap\cubemap_vertex.glsl" />
-    <None Include="res\shaders\quad_fragment.glsl" />
-    <None Include="res\shaders\quad_vertex.glsl" />
-    <None Include="res\shaders\lighting.shader" />
-    <None Include="res\shaders\main_blending_fragment.glsl" />
-    <None Include="res\shaders\main_blending_vertex.glsl" />
-    <None Include="res\shaders\shaders.shader" />
-    <None Include="res\shaders\test_fragment.glsl" />
-    <None Include="res\shaders\test_vertex.glsl" />
+    <None Include="Application\res\models\backpack\backpack.mtl" />
+    <None Include="Application\res\shaders\Backpack.shader" />
+    <None Include="Application\res\shaders\backpack_new.shader" />
+    <None Include="Application\res\shaders\cubemap\cubemap_fragment.glsl" />
+    <None Include="Application\res\shaders\cubemap\cubemap_vertex.glsl" />
+    <None Include="Application\res\shaders\quad_fragment.glsl" />
+    <None Include="Application\res\shaders\quad_vertex.glsl" />
+    <None Include="Application\res\shaders\lighting.shader" />
+    <None Include="Application\res\shaders\main_blending_fragment.glsl" />
+    <None Include="Application\res\shaders\main_blending_vertex.glsl" />
+    <None Include="Application\res\shaders\shaders.shader" />
+    <None Include="Application\res\shaders\test_fragment.glsl" />
+    <None Include="Application\res\shaders\test_vertex.glsl" />
     <None Include="src\shaders\shaders.shader" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
     <None Include="src\vendor\glm\detail\func_common_simd.inl" />
@@ -636,14 +636,14 @@
     <ClInclude Include="src\VertexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\models\backpack\ao.jpg" />
-    <Image Include="res\models\backpack\diffuse.jpg" />
-    <Image Include="res\models\backpack\normal.png" />
-    <Image Include="res\models\backpack\roughness.jpg" />
-    <Image Include="res\models\backpack\specular.jpg" />
+    <Image Include="Application\res\models\backpack\ao.jpg" />
+    <Image Include="Application\res\models\backpack\diffuse.jpg" />
+    <Image Include="Application\res\models\backpack\normal.png" />
+    <Image Include="Application\res\models\backpack\roughness.jpg" />
+    <Image Include="Application\res\models\backpack\specular.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="res\models\backpack\source_attribution.txt" />
+    <Text Include="Application\res\models\backpack\source_attribution.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
