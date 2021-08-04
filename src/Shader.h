@@ -5,14 +5,16 @@
 class Shader
 {
 private:
-	unsigned int m_Id;
 	mutable std::unordered_map<std::string, int> m_Locations;
 
 	void readFile(const char* filePath, std::string& content) const;
 public:
+	unsigned int m_Id;
 	Shader(const char* filepath);
 
-	Shader(const char* vertexFilepath, const char* fragmentFilepath);
+	Shader(const char* vertexFilepath, const char* fragmentFilepath, const char* geometryFilepath = nullptr);
+
+	Shader() = delete;
 
 	void use();
 	
@@ -51,5 +53,9 @@ public:
 	void SetUniform(const char* name, const float v0, const float v1, const float v2) const
 	{
 		glUniform3f(GetLocation(name), v0, v1, v2);
+	}
+	void SetUniform(const char* name, const glm::vec2& value) const
+	{
+		glUniform2f(GetLocation(name), value.x, value.y);
 	}
 };

@@ -11,7 +11,10 @@ class Model
 {
 public:
 	Model(const char* path, bool gamma = false) : gammaCorrection(gamma)
-	{	loadModel(path);	}
+	{
+		stbi_set_flip_vertically_on_load(true);
+		loadModel(path);	
+	}
 
 	void Draw(Shader& shader);
 

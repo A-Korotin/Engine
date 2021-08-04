@@ -30,8 +30,8 @@ public:
 
 	void Draw(Shader& shader);
 
-private:
 	unsigned int VAO, VBO, EBO;
+private:
 
 	void setupMesh();
 };

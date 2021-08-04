@@ -48,25 +48,24 @@
     <ClCompile Include="src\VertexBufferLayout.h">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="src\vendor\ogre\Assimp.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ModelLoadingScene.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
     <ClCompile Include="src\Mesh.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="src\Model.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="src\ModelLoadingScene.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\framebuffers.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="src\vendor\ogre\Assimp.cpp">
+    <ClCompile Include="Application\Asteriod_field.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\shaders\shaders.shader" />
-    <None Include="Application\res\shaders\shaders.shader" />
     <None Include="CORE\Core\CorePCH.pch" />
     <None Include="src\vendor\glm\detail\func_common.inl">
       <Filter>Файлы заголовков</Filter>
@@ -478,22 +477,38 @@
     </None>
     <None Include="res\shaders\shaders.shader" />
     <None Include="CORE\Core\CorePCH.pch" />
-    <None Include="Application\res\shaders\lighting.shader" />
-    <None Include="Application\res\shaders\Backpack.shader" />
     <None Include="Application\res\models\backpack\backpack.mtl" />
     <None Include="bin\assimp-vc142-mt.dll" />
     <None Include="bin\Engine.exe" />
     <None Include="bin\Engine.ilk" />
     <None Include="bin\Engine.pdb" />
-    <None Include="Application\res\shaders\backpack_new.shader" />
-    <None Include="Application\res\shaders\test_vertex.glsl" />
-    <None Include="Application\res\shaders\test_fragment.glsl" />
-    <None Include="Application\res\shaders\main_blending_fragment.glsl" />
-    <None Include="Application\res\shaders\main_blending_vertex.glsl" />
-    <None Include="Application\res\shaders\quad_vertex.glsl" />
-    <None Include="Application\res\shaders\quad_fragment.glsl" />
+    <None Include="Application\res\shaders\Model_explode_geometry\test_vertex.glsl" />
+    <None Include="Application\res\shaders\Model_explode_geometry\test_fragment.glsl" />
     <None Include="Application\res\shaders\cubemap\cubemap_vertex.glsl" />
     <None Include="Application\res\shaders\cubemap\cubemap_fragment.glsl" />
+    <None Include="Application\res\shaders\Geometry_shader_test\vertex.glsl" />
+    <None Include="Application\res\shaders\Geometry_shader_test\fragment.glsl" />
+    <None Include="Application\res\shaders\Geometry_shader_test\geometry.glsl" />
+    <None Include="Application\res\shaders\shaders.shader" />
+    <None Include="Application\res\shaders\Backpack.shader" />
+    <None Include="Application\res\shaders\backpack_new.shader" />
+    <None Include="Application\res\shaders\lighting.shader" />
+    <None Include="Application\res\shaders\main_blending_fragment.glsl" />
+    <None Include="Application\res\shaders\main_blending_vertex.glsl" />
+    <None Include="Application\res\shaders\quad_fragment.glsl" />
+    <None Include="Application\res\shaders\quad_vertex.glsl" />
+    <None Include="Application\res\shaders\Model_explode_geometry\test_geometry.glsl" />
+    <None Include="Application\res\shaders\Visualize_normals\vertex.glsl" />
+    <None Include="Application\res\shaders\Visualize_normals\fragment.glsl" />
+    <None Include="Application\res\shaders\Visualize_normals\geometry.glsl" />
+    <None Include="Application\res\shaders\instanced_rendering\vertex.glsl" />
+    <None Include="Application\res\shaders\instanced_rendering\fragment.glsl" />
+    <None Include="Application\res\shaders\instanced_array_rendering\vertex.glsl" />
+    <None Include="Application\res\shaders\instanced_array_rendering\fragment.glsl" />
+    <None Include="Application\res\shaders\asteroid_field\rock_vertex.glsl" />
+    <None Include="Application\res\shaders\asteroid_field\rock_fragment.glsl" />
+    <None Include="Application\res\shaders\asteroid_field\planet_vertex.glsl" />
+    <None Include="Application\res\shaders\asteroid_field\planet_fragment.glsl" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Shader.h">
@@ -1387,22 +1402,22 @@
     <ClInclude Include="CORE\Core\CorePCH.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mesh.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Model.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="src\BasicShapes.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="src\Scene.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
+    <ClInclude Include="src\vendor\ogre\Assimp.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
     <ClInclude Include="src\ModelLoadScene.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="src\vendor\ogre\Assimp.h">
+    <ClInclude Include="src\Mesh.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Model.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
